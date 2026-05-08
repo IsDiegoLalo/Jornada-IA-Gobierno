@@ -1,0 +1,13 @@
+{
+  "name": "Run Unit Tests on Save",
+  "version": "1.0.0",
+  "description": "Ejecuta los tests unitarios relevantes cuando cambia un archivo de código fuente",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["src/**/*.py", "src/**/*.ts", "src/**/*.js", "src/**/*.java"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "python -m pytest tests/unit/ -x -q 2>&1 | tail -20"
+  }
+}

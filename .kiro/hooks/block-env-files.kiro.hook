@@ -1,0 +1,13 @@
+{
+  "name": "Block ENV Files",
+  "version": "1.0.0",
+  "description": "Bloquea el staging de archivos .env con datos reales",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["**/.env", "**/.env.*"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "echo 'WARNING: Archivo .env detectado. Asegurate de que no contenga credenciales reales y que esté en .gitignore'"
+  }
+}

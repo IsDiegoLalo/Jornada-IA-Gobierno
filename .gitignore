@@ -1,0 +1,54 @@
+# Datasets grandes — descargar por separado desde las fuentes oficiales
+datasets/sube/*.csv
+datasets/sube/*.xlsx
+datasets/salud/*.csv
+datasets/salud/*.xlsx
+turistas-no-residentes-serie.csv
+turismo_llegadas_internacionales.png
+
+# Demo SUBE (no subir al repo)
+SUBE/
+
+# Variables de entorno — nunca subir credenciales
+.env
+.env.local
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Node / JavaScript
+node_modules/
+.next/
+dist/
+build/
+.cache/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Kiro MCP config (contiene rutas absolutas, se genera con setup.sh)
+.kiro/settings/mcp.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Jupyter Notebooks (checkpoints)
+.ipynb_checkpoints/

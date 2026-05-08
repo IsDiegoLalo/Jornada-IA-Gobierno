@@ -1,0 +1,13 @@
+{
+  "name": "Auto Lint Python",
+  "version": "1.0.0",
+  "description": "Ejecuta el linter al guardar archivos de código Python",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["**/*.py"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "ruff check --fix && black ."
+  }
+}

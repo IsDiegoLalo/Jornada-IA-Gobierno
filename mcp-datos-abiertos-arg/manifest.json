@@ -1,0 +1,18 @@
+{
+  "name": "datos-abiertos-argentina-mcp",
+  "version": "0.1.0",
+  "description": "Servidor MCP para el Portal Nacional de Datos Abiertos de Argentina (datos.gob.ar)",
+  "author": "Jornada de IA para Gobierno",
+  "license": "MIT",
+  "transport": "stdio",
+  "command": "python",
+  "args": ["main.py"],
+  "tools": [
+    "search_datasets",
+    "get_dataset_info",
+    "list_dataset_resources",
+    "query_resource_data",
+    "list_organizations",
+    "index_stats"
+  ]
+}
