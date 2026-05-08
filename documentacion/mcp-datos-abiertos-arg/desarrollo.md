@@ -5,12 +5,15 @@
 ```bash
 # Clonar el repositorio
 git clone https://github.com/Eduvilascoder/Jornada-IA-Gobierno.git
-cd Jornada-IA-Gobierno/MCP-datos-abiertos-arg
+cd Jornada-IA-Gobierno/mcp-datos-abiertos-arg
 
 # Crear entorno virtual (recomendado)
-python3 -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-# .venv\Scripts\activate   # Windows
+python3 -m venv .venv        # macOS/Linux
+# python -m venv .venv       # Windows
+
+source .venv/bin/activate    # macOS/Linux
+# .venv\Scripts\activate     # Windows (CMD)
+# .venv\Scripts\Activate.ps1 # Windows (PowerShell)
 
 # Instalar dependencias + dev
 pip install -e ".[dev]"

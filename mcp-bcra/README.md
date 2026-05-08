@@ -52,12 +52,14 @@ Este MCP convierte esa API en algo que un agente de IA puede consultar en lengua
 
 ## Instalación
 
-Requiere **Python 3.10+**.
+Requiere **Python 3.10+** (Windows, macOS o Linux).
 
 ```bash
 cd mcp-bcra
 pip install mcp httpx
 ```
+
+> **Windows:** Usá `pip` en lugar de `pip3`, y `python` en lugar de `python3` en todos los comandos.
 
 O usando el pyproject.toml:
 
@@ -71,6 +73,7 @@ pip install -e .
 
 Editar `.kiro/settings/mcp.json`:
 
+**macOS / Linux:**
 ```json
 {
   "mcpServers": {
@@ -81,6 +84,20 @@ Editar `.kiro/settings/mcp.json`:
   }
 }
 ```
+
+**Windows:**
+```json
+{
+  "mcpServers": {
+    "bcra": {
+      "command": "python",
+      "args": ["C:/Users/TU_USUARIO/ruta/al/mcp-bcra/main.py"]
+    }
+  }
+}
+```
+
+> **Tip:** Ejecutá `setup.sh` (macOS/Linux) o `setup.bat` (Windows) desde la raíz del proyecto para generar este archivo automáticamente con las rutas correctas.
 
 ### Claude Desktop
 

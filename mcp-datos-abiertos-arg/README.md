@@ -62,13 +62,15 @@ El portal datos.gob.ar usa CKAN y expone una API estándar. Para lograr búsqued
 
 ## Instalación
 
-Requiere **Python 3.10+**.
+Requiere **Python 3.10+** (Windows, macOS o Linux).
 
 ```bash
-cd MCP-datos-abiertos-arg
+cd mcp-datos-abiertos-arg
 pip install mcp httpx pandas openpyxl
 python build_index.py        # ~5 seg, genera index.json (~3 MB)
 ```
+
+> **Windows:** Usá `pip` en lugar de `pip3`, y `python` en lugar de `python3` en todos los comandos.
 
 Para desarrollo rápido: `python build_index.py --limit 100` solo trae 100 datasets.
 
@@ -78,16 +80,31 @@ Para desarrollo rápido: `python build_index.py --limit 100` solo trae 100 datas
 
 Editar `.kiro/settings/mcp.json`:
 
+**macOS / Linux:**
 ```json
 {
   "mcpServers": {
     "argentina-datos-abiertos": {
       "command": "python3",
-      "args": ["/RUTA/ABSOLUTA/A/MCP-datos-abiertos-arg/main.py"]
+      "args": ["/RUTA/ABSOLUTA/A/mcp-datos-abiertos-arg/main.py"]
     }
   }
 }
 ```
+
+**Windows:**
+```json
+{
+  "mcpServers": {
+    "argentina-datos-abiertos": {
+      "command": "python",
+      "args": ["C:/Users/TU_USUARIO/ruta/al/mcp-datos-abiertos-arg/main.py"]
+    }
+  }
+}
+```
+
+> **Tip:** Ejecutá `setup.sh` (macOS/Linux) o `setup.bat` (Windows) desde la raíz del proyecto para generar este archivo automáticamente con las rutas correctas.
 
 ### Claude Desktop
 

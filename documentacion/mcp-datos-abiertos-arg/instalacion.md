@@ -6,10 +6,15 @@
 - pip (gestor de paquetes de Python)
 - Conexión a internet (para generar el índice y para `query_resource_data`)
 
+> **Nota sobre comandos según sistema operativo:**
+> - **macOS / Linux:** Usá `python3` y `pip3`
+> - **Windows:** Usá `python` y `pip` (o `python -m pip`)
+> - **Alternativa:** Ejecutá `setup.sh` (macOS/Linux) o `setup.bat` (Windows) desde la raíz del proyecto para configurar todo automáticamente.
+
 ## Paso 1: Instalar dependencias
 
 ```bash
-cd MCP-datos-abiertos-arg
+cd mcp-datos-abiertos-arg
 pip install mcp httpx pandas openpyxl
 ```
 
@@ -35,6 +40,7 @@ python build_index.py --limit 100
 
 ## Paso 3: Verificar que funciona
 
+**macOS / Linux:**
 ```bash
 python3 -c "
 import asyncio, json, sys
@@ -45,6 +51,11 @@ print(json.dumps(json.loads(result), indent=2, ensure_ascii=False))
 "
 ```
 
+**Windows (CMD):**
+```cmd
+python -c "import asyncio, json, sys; sys.path.insert(0, '.'); from main import tool_search_datasets; result = asyncio.run(tool_search_datasets('salud', limit=3)); print(json.dumps(json.loads(result), indent=2, ensure_ascii=False))"
+```
+
 Deberías ver resultados de datasets relacionados con salud.
 
 ## Paso 4: Configurar en tu cliente de IA
@@ -53,16 +64,31 @@ Deberías ver resultados de datasets relacionados con salud.
 
 Editar `.kiro/settings/mcp.json` en tu workspace:
 
+**macOS / Linux:**
 ```json
 {
   "mcpServers": {
     "argentina-datos-abiertos": {
       "command": "python3",
-      "args": ["/RUTA/ABSOLUTA/A/MCP-datos-abiertos-arg/main.py"]
+      "args": ["/RUTA/ABSOLUTA/A/mcp-datos-abiertos-arg/main.py"]
     }
   }
 }
 ```
+
+**Windows:**
+```json
+{
+  "mcpServers": {
+    "argentina-datos-abiertos": {
+      "command": "python",
+      "args": ["C:/Users/TU_USUARIO/ruta/al/mcp-datos-abiertos-arg/main.py"]
+    }
+  }
+}
+```
+
+> **Tip:** Usá forward slashes (`/`) en las rutas del JSON incluso en Windows. JSON las acepta y evita problemas de escape.
 
 ### Claude Desktop
 

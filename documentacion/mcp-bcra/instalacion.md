@@ -6,6 +6,11 @@
 - pip (gestor de paquetes de Python)
 - Conexión a internet (para consultar la API del BCRA)
 
+> **Nota sobre comandos según sistema operativo:**
+> - **macOS / Linux:** Usá `python3` y `pip3`
+> - **Windows:** Usá `python` y `pip` (o `python -m pip`)
+> - **Alternativa:** Ejecutá `setup.sh` (macOS/Linux) o `setup.bat` (Windows) desde la raíz del proyecto para configurar todo automáticamente.
+
 ## Paso 1: Instalar dependencias
 
 ```bash
@@ -23,6 +28,7 @@ pip install -e .
 
 ## Paso 2: Verificar que funciona
 
+**macOS / Linux:**
 ```bash
 python3 -c "
 import asyncio, sys
@@ -33,6 +39,11 @@ print(result[:500])
 "
 ```
 
+**Windows (CMD):**
+```cmd
+python -c "import asyncio, sys; sys.path.insert(0, 'mcp-bcra'); from main import tool_list_variables; result = asyncio.run(tool_list_variables()); print(result[:500])"
+```
+
 Deberías ver una lista de variables del BCRA con sus últimos valores.
 
 ## Paso 3: Configurar en tu cliente de IA
@@ -41,6 +52,7 @@ Deberías ver una lista de variables del BCRA con sus últimos valores.
 
 Editar `.kiro/settings/mcp.json` en tu workspace:
 
+**macOS / Linux:**
 ```json
 {
   "mcpServers": {
@@ -51,6 +63,20 @@ Editar `.kiro/settings/mcp.json` en tu workspace:
   }
 }
 ```
+
+**Windows:**
+```json
+{
+  "mcpServers": {
+    "bcra": {
+      "command": "python",
+      "args": ["C:/Users/TU_USUARIO/ruta/al/mcp-bcra/main.py"]
+    }
+  }
+}
+```
+
+> **Tip:** Usá forward slashes (`/`) en las rutas del JSON incluso en Windows.
 
 ### Claude Desktop
 

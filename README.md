@@ -1,7 +1,9 @@
-**Jornada de IA para Gobierno para el sector publico** - UNDER CONSTRUCTION - 
+**Jornada de IA para Gobierno para el sector público**
 
 ¡Bienvenidos al Jornada de Kiro para el Sector Público Argentino!
-Organizado por la Secretaría de Innovación, Ciencia y Tecnología (SICYT), este evento busca impulsar la creación de aplicacio
+Organizado por la Secretaría de Innovación, Ciencia y Tecnología (SICYT), este evento busca impulsar la creación de aplicaciones útiles para la ciudadanía usando datos abiertos del Estado argentino.
+
+> 💻 **Compatibilidad:** Este proyecto funciona en **Windows**, **macOS** y **Linux**. Incluye scripts de setup para cada plataforma.
 
 **Objetivo del Jornada**
 Construir aplicaciones prácticas y escalables que demuestren el valor de integrar datos públicos con herramientas de desarrollo avanzadas como Kiro. Los participantes podrán explorar desde la obtención de datos hasta la implementación de soluciones reales para desafíos del sector público argentino.
@@ -254,15 +256,24 @@ Kiro automáticamente:
 
 ### Setup rápido (1 minuto)
 
+#### macOS / Linux
 ```bash
-# Correr el script de setup (instala dependencias + configura el MCP)
+chmod +x setup.sh
 ./setup.sh
 ```
 
-El script:
-1. Instala las dependencias Python (`mcp`, `httpx`, `pandas`, `openpyxl`)
-2. Genera el índice si no existe
-3. Crea `.kiro/settings/mcp.json` con la ruta correcta de tu máquina
+#### Windows (CMD o PowerShell)
+```cmd
+setup.bat
+```
+
+El script (ambas versiones hacen lo mismo):
+1. Verifica que tengas Python 3.10+ instalado
+2. Instala las dependencias Python (`mcp`, `httpx`, `pandas`, `openpyxl`)
+3. Genera el índice si no existe
+4. Crea `.kiro/settings/mcp.json` con la ruta correcta de tu máquina
+
+> **Nota Windows:** El comando de Python en Windows es `python` (no `python3`). El `setup.bat` lo detecta automáticamente. Si Python no está en tu PATH, durante la instalación de Python marcá la casilla **"Add Python to PATH"**.
 
 Después abrí el folder en Kiro y el MCP se conecta solo. No hay que configurar nada más.
 
