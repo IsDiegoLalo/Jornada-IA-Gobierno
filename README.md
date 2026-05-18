@@ -312,15 +312,16 @@ Después abrí el folder en Kiro y el MCP se conecta solo. No hay que configurar
 ***Agenda***
 
 09-00 - Cafecito de Bienvenida
-09:30 – 9:40 Bienvenida al evento de AWS 
-09:40 – 10:40 IA en AWS - Amazon Bedrock  - IA Agentica (Strands + Agentcore) 
+09:30 – 9:40 Bienvenida al evento de AWS
+09:40 – 10:40 IA en AWS - Amazon Bedrock  - IA Agentica (Strands + Agentcore)
 10:40 – 11:10 Amazon Quick
 11:10 – 11:30 Break
-11:30 – 12:00 AWS Transform 
+11:30 – 12:00 AWS Transform
 12:00 – 12:30 Presentacion de SICYT sobre Datos Abiertos
 
-12:30  - 13:30 Almuerzo 
-13:30 – 14:30 Kiro 
+12:30  - 13:30 Almuerzo
+
+13:30 – 14:30 Kiro
 14:30 – 17:00 Workshop de Kiro con Datos Abiertos de Argentina
 17:00 – 18:00 Presentaciones de Equipos - Evaluación - Entrega de Premios
 
