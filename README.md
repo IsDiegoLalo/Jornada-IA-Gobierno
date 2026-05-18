@@ -306,14 +306,23 @@ Después abrí el folder en Kiro y el MCP se conecta solo. No hay que configurar
 - Impacto social	25%
 
 ***📅 Calendario del Jornada***
-- Fecha	Actividad - Martes 19 de Mayo de 2026
-- Lugar: Auditorio de la Secretaria de Ciencia y Tecnologia
+- Fecha	Actividad - Miercoles 27 de Mayo de 2026
+- Lugar: Auditorio de la Secretaria de Ciencia y Tecnologia - Dirección: Godoy Cruz 2320, Capital Federal
   
 ***Agenda***
--9 a 12:  IA en AWS - clase teórica y demo de productos
--12 a 13: Almuerzo
--13 a 16: Jornada de IA para Gobierno
--16 a 17: Evaluación y entrega de premios
+
+09-00 - Cafecito de Bienvenida
+09:30 – 9:40 Bienvenida al evento de AWS 
+09:40 – 10:40 IA en AWS - Amazon Bedrock  - IA Agentica (Strands + Agentcore) 
+10:40 – 11:10 Amazon Quick
+11:10 – 11:30 Break
+11:30 – 12:00 AWS Transform 
+12:00 – 12:30 Presentacion de SICYT sobre Datos Abiertos
+
+12:30  - 13:30 Almuerzo 
+13:30 – 14:30 Kiro 
+14:30 – 17:00 Workshop de Kiro con Datos Abiertos de Argentina
+17:00 – 18:00 Presentaciones de Equipos - Evaluación - Entrega de Premios
 
 ***❓ Soporte y Preguntas ***
 Canal de Discord: #Jornada-IA-Gobierno-sicyt (enlace proporcionado al inscribirse).
