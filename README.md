@@ -325,9 +325,6 @@ Después abrí el folder en Kiro y el MCP se conecta solo. No hay que configurar
 14:30 – 17:00 Workshop de Kiro con Datos Abiertos de Argentina
 17:00 – 18:00 Presentaciones de Equipos - Evaluación - Entrega de Premios
 
-***❓ Soporte y Preguntas ***
-Canal de Discord: #Jornada-IA-Gobierno-sicyt (enlace proporcionado al inscribirse).
-Correo de contacto: jornada@sicyt.gob.ar
 
 ***📜 Licencia***
 Todos los proyectos desarrollados durante el jornada deben licenciarse bajo Creative Commons Attribution 4.0 International (CC BY 4.0) para garantizar la reutilización y transparencia.
