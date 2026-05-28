@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecciones Poblacionales Argentina 2028-2035 (Prototipo)</title>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; color: #333; }
+        .header { background: #1a2332; color: white; padding: 24px 40px; }
+        .header h1 { font-size: 1.6rem; font-weight: 600; }
+        .header p { font-size: 0.9rem; color: #94a3b8; margin-top: 4px; }
+        .warning-banner {
+            background: #fef3cd; border: 1px solid #ffc107; color: #856404;
+            padding: 10px 40px; font-size: 0.9rem; font-weight: 500;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .controls { padding: 20px 40px; background: white; border-bottom: 1px solid #e2e8f0; }
+        .controls label { font-weight: 600; margin-right: 12px; font-size: 0.95rem; }
+        .controls select {
+            padding: 8px 16px; font-size: 0.95rem; border: 1px solid #cbd5e1;
+            border-radius: 6px; background: white; min-width: 280px; cursor: pointer;
+        }
+        .controls select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .charts-container { padding: 24px 40px; display: flex; flex-direction: column; gap: 28px; }
+        .chart-card {
+            background: white; border-radius: 10px; padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+        }
+        .chart-card h2 { font-size: 1.1rem; color: #1e293b; margin-bottom: 16px; font-weight: 600; }
+        .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+        @media (max-width: 1024px) { .chart-row { grid-template-columns: 1fr; } }
+        footer { text-align: center; padding: 20px; color: #94a3b8; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <div class="warning-banner">⚠️ PROTOTIPO - Datos ficticios de ejemplo</div>
+    <div class="header">
+        <h1>Proyecciones Poblacionales Argentina 2028-2035</h1>
+        <p>Dashboard interactivo de proyecciones demográficas por provincia y zona geográfica</p>
+    </div>
+    <div class="controls">
+        <label for="province-filter">Filtrar por:</label>
+        <select id="province-filter">
+            <option value="all">Argentina (País Completo)</option>
+        </select>
+    </div>
+    <div class="charts-container">
+        <div class="chart-card">
+            <h2>📈 Evolución Temporal de la Población (2028-2035)</h2>
+            <div id="line-chart"></div>
+        </div>
+        <div class="chart-row">
+            <div class="chart-card">
+                <h2>📊 Provincias por Crecimiento Proyectado (%)</h2>
+                <div id="bar-chart"></div>
+            </div>
+            <div class="chart-card">
+                <h2>🗺️ Zonas Geográficas por Crecimiento (%)</h2>
+                <div id="zone-chart"></div>
+            </div>
+        </div>
+    </div>
+    <footer>Prototipo generado con datos ficticios · Jornada IA para Gobierno 2025</footer>
+
+    <script>
+    // --- FICTIONAL DATA ---
+    const YEARS = [2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035];
+
+    const ZONES = {
+        'Norte': ['Jujuy', 'Salta', 'Tucumán', 'Catamarca', 'La Rioja', 'Santiago del Estero', 'Chaco', 'Formosa', 'Corrientes', 'Misiones'],
+        'Este/Centro': ['Buenos Aires', 'CABA', 'Córdoba', 'Santa Fe', 'Entre Ríos'],
+        'Oeste': ['Mendoza', 'San Juan', 'San Luis'],
+        'Sur': ['La Pampa', 'Neuquén', 'Río Negro', 'Chubut', 'Santa Cruz', 'Tierra del Fuego']
+    };
+
+    // Base populations (approximate 2022 census, in thousands)
+    const BASE_POP = {
+        'Buenos Aires': 17540000,
+        'CABA': 3120000,
+        'Córdoba': 3760000,
+        'Santa Fe': 3530000,
+        'Mendoza': 2010000,
+        'Tucumán': 1690000,
+        'Entre Ríos': 1390000,
+        'Salta': 1440000,
+        'Misiones': 1260000,
+        'Chaco': 1210000,
+        'Corrientes': 1130000,
+        'Santiago del Estero': 1030000,
+        'San Juan': 810000,
+        'Jujuy': 770000,
+        'Río Negro': 750000,
+        'Neuquén': 720000,
+        'Formosa': 610000,
+        'Chubut': 620000,
+        'San Luis': 540000,
+        'Catamarca': 420000,
+        'La Rioja': 400000,
+        'La Pampa': 360000,
+        'Santa Cruz': 370000,
+        'Tierra del Fuego': 190000
+    };
+
+    // Annual growth rates (fictional but realistic, varying by province)
+    const GROWTH_RATES = {
+        'Buenos Aires': 0.0065,
+        'CABA': 0.003,
+        'Córdoba': 0.008,
+        'Santa Fe': 0.005,
+        'Mendoza': 0.007,
+        'Tucumán': 0.009,
+        'Entre Ríos': 0.004,
+        'Salta': 0.012,
+        'Misiones': 0.011,
+        'Chaco': 0.008,
+        'Corrientes': 0.006,
+        'Santiago del Estero': 0.009,
+        'San Juan': 0.007,
+        'Jujuy': 0.010,
+        'Río Negro': 0.011,
+        'Neuquén': 0.015,
+        'Formosa': 0.010,
+        'Chubut': 0.009,
+        'San Luis': 0.008,
+        'Catamarca': 0.007,
+        'La Rioja': 0.006,
+        'La Pampa': 0.004,
+        'Santa Cruz': 0.013,
+        'Tierra del Fuego': 0.014
+    };
+
+    // Generate projected populations for each province and year
+    function generateProjections() {
+        const data = {};
+        const provinces = Object.keys(BASE_POP);
+        provinces.forEach(prov => {
+            data[prov] = [];
+            // Project from 2022 to 2028 first (6 years gap)
+            const pop2028 = BASE_POP[prov] * Math.pow(1 + GROWTH_RATES[prov], 6);
+            for (let i = 0; i < YEARS.length; i++) {
+                data[prov].push(Math.round(pop2028 * Math.pow(1 + GROWTH_RATES[prov], i)));
+            }
+        });
+        return data;
+    }
+
+    const PROJECTIONS = generateProjections();
+    const PROVINCES = Object.keys(BASE_POP).sort();
+
+    // Get zone for a province
+    function getZone(province) {
+        for (const [zone, provs] of Object.entries(ZONES)) {
+            if (provs.includes(province)) return zone;
+        }
+        return null;
+    }
+
+    // Calculate growth percentage (2028 to 2035)
+    function getGrowthPct(province) {
+        const vals = PROJECTIONS[province];
+        return ((vals[vals.length - 1] - vals[0]) / vals[0] * 100);
+    }
+
+    // Format numbers abbreviated
+    function formatPop(val) {
+        if (val >= 1e6) return (val / 1e6).toFixed(1) + 'M';
+        if (val >= 1e3) return (val / 1e3).toFixed(0) + 'K';
+        return val.toString();
+    }
+
+    // Populate dropdown
+    const select = document.getElementById('province-filter');
+    PROVINCES.forEach(prov => {
+        const opt = document.createElement('option');
+        opt.value = prov;
+        opt.textContent = prov;
+        select.appendChild(opt);
+    });
+
+    // --- CHART RENDERING ---
+    const COLORS = {
+        primary: '#3b82f6',
+        highlight: '#ef4444',
+        zones: ['#6366f1', '#10b981', '#f59e0b', '#ec4899']
+    };
+
+    function renderLineChart(selectedProvince) {
+        const traces = [];
+        if (selectedProvince === 'all') {
+            // Show total Argentina
+            const totalPop = YEARS.map((_, i) => {
+                return Object.values(PROJECTIONS).reduce((sum, vals) => sum + vals[i], 0);
+            });
+            traces.push({
+                x: YEARS, y: totalPop, mode: 'lines+markers',
+                name: 'Argentina Total', line: { color: COLORS.primary, width: 3 },
+                marker: { size: 7 }
+            });
+        } else {
+            traces.push({
+                x: YEARS, y: PROJECTIONS[selectedProvince], mode: 'lines+markers',
+                name: selectedProvince, line: { color: COLORS.primary, width: 3 },
+                marker: { size: 7 }
+            });
+        }
+
+        const layout = {
+            margin: { t: 20, b: 50, l: 70, r: 30 },
+            xaxis: { title: 'Año', dtick: 1 },
+            yaxis: {
+                title: 'Población',
+                tickformat: ',',
+                hoverformat: ',',
+                tickvals: undefined
+            },
+            hovermode: 'x unified',
+            height: 340,
+            font: { family: 'Segoe UI, sans-serif' }
+        };
+
+        // Custom tick values for abbreviated format
+        const yVals = traces[0].y;
+        const yMin = Math.min(...yVals);
+        const yMax = Math.max(...yVals);
+        const step = (yMax - yMin) / 5;
+        const tickVals = Array.from({length: 6}, (_, i) => Math.round(yMin + step * i));
+        layout.yaxis.tickvals = tickVals;
+        layout.yaxis.ticktext = tickVals.map(formatPop);
+
+        Plotly.newPlot('line-chart', traces, layout, { responsive: true, displayModeBar: false });
+    }
+
+    function renderBarChart(selectedProvince) {
+        // Sort provinces by growth percentage
+        const sorted = PROVINCES.map(p => ({ name: p, growth: getGrowthPct(p) }))
+            .sort((a, b) => a.growth - b.growth);
+
+        const colors = sorted.map(p =>
+            (selectedProvince !== 'all' && p.name === selectedProvince) ? COLORS.highlight : COLORS.primary
+        );
+
+        const trace = {
+            y: sorted.map(p => p.name),
+            x: sorted.map(p => p.growth),
+            type: 'bar',
+            orientation: 'h',
+            marker: { color: colors },
+            text: sorted.map(p => p.growth.toFixed(2) + '%'),
+            textposition: 'outside',
+            textfont: { size: 10 }
+        };
+
+        const layout = {
+            margin: { t: 10, b: 40, l: 130, r: 60 },
+            xaxis: { title: 'Crecimiento (%)', ticksuffix: '%' },
+            yaxis: { automargin: true },
+            height: 700,
+            font: { family: 'Segoe UI, sans-serif', size: 11 }
+        };
+
+        Plotly.newPlot('bar-chart', [trace], layout, { responsive: true, displayModeBar: false });
+    }
+
+    function renderZoneChart(selectedProvince) {
+        const zoneData = Object.entries(ZONES).map(([zoneName, provs]) => {
+            // Zone growth = weighted average by population
+            const pop2028 = provs.reduce((s, p) => s + PROJECTIONS[p][0], 0);
+            const pop2035 = provs.reduce((s, p) => s + PROJECTIONS[p][YEARS.length - 1], 0);
+            const growth = (pop2035 - pop2028) / pop2028 * 100;
+            return { name: zoneName, growth, provs };
+        }).sort((a, b) => b.growth - a.growth);
+
+        let filteredData = zoneData;
+        let colors = COLORS.zones;
+
+        if (selectedProvince !== 'all') {
+            const selectedZone = getZone(selectedProvince);
+            filteredData = zoneData.filter(z => z.name === selectedZone);
+            colors = [COLORS.highlight];
+        }
+
+        const trace = {
+            x: filteredData.map(z => z.name),
+            y: filteredData.map(z => z.growth),
+            type: 'bar',
+            marker: { color: colors },
+            text: filteredData.map(z => z.growth.toFixed(2) + '%'),
+            textposition: 'outside',
+            textfont: { size: 12 }
+        };
+
+        const layout = {
+            margin: { t: 10, b: 50, l: 60, r: 30 },
+            xaxis: { title: 'Zona Geográfica' },
+            yaxis: { title: 'Crecimiento (%)', ticksuffix: '%' },
+            height: 700,
+            font: { family: 'Segoe UI, sans-serif' }
+        };
+
+        Plotly.newPlot('zone-chart', [trace], layout, { responsive: true, displayModeBar: false });
+    }
+
+    function renderAll(selectedProvince) {
+        renderLineChart(selectedProvince);
+        renderBarChart(selectedProvince);
+        renderZoneChart(selectedProvince);
+    }
+
+    // Initial render
+    renderAll('all');
+
+    // Filter event
+    select.addEventListener('change', function() {
+        renderAll(this.value);
+    });
+    </script>
+</body>
+</html>
